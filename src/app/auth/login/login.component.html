@@ -8,15 +8,15 @@
           <br>
           <br>
          
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
             <div class="form-group">
               <label for="exampleInputEmail1">Correo Electrónico</label>
-              <input type="email" class="form-control" placeholder="Ingrese su Correo Electrónico">
+              <input type="email" class="form-control" placeholder="Ingrese su Correo Electrónico" formControlName="email">
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Contraseña</label>
-              <input type="password" class="form-control" placeholder="Ingrese su Contraseña">
+              <input type="password" class="form-control" placeholder="Ingrese su Contraseña" formControlName="password">
             </div>
             <div class="row mb-4">
                 <div class="col-sm">
