@@ -15,14 +15,14 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/vertrabajos">Ver trabajos</a>
+          <a class="nav-link" routerLink="/vertrabajos" *ngIf="isAdmin || isPoster">Ver trabajos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/creartrabajos">Postear trabajos</a>
+          <a class="nav-link" routerLink="/creartrabajos" *ngIf="isAdmin || isPoster">Postear trabajos</a>
         </li>
       </ul>
       <span class="navbar-text">
-        <a class="nav-link" routerLink="/login">Cerrar Sesion</a>
+        <a class="nav-link" type="button"  (click)="onLogout()">Cerrar Sesion</a>
       </span>
     </div>
   </nav>

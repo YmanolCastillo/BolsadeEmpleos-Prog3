@@ -13,7 +13,7 @@ import { VertrabajosComponent } from './principales/vertrabajos/vertrabajos.comp
 import { CreartrabajosComponent } from './principales/creartrabajos/creartrabajos.component';
 import {AuthService} from '../app/services/auth.service';
 import {environment} from "../environments/environment"
-
+import {PostService} from '../app/services/post.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +32,7 @@ import {environment} from "../environments/environment"
     AngularFirestoreModule,
     AngularFireAuthModule, ReactiveFormsModule 
   ],
-  providers: [AuthService],
+  providers: [AuthService,PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,16 +12,27 @@ export class RegistroComponent implements OnInit {
   registerForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
+    nombre: new FormControl(''),
+    TipoDeCuenta:new FormControl('')
   });
+TipoDeCuenta=this.registerForm.value;
+  name:string;
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.TipoDeCuenta)
+    this.onItemChange(this.TipoDeCuenta.valueOf())
   }
+
+  onItemChange(value){
+    
+    console.log(" Value is : ", value );
+ }
   async onRegister() {
-    const { email, password } = this.registerForm.value;
+    const { email, password,TipoDeCuenta,nombre } = this.registerForm.value;
   
     try {
-      const user = await this.authService.registro(email, password);
+      const user = await this.authService.registro(email, password,nombre,TipoDeCuenta);
       if (user) {
         this.router.navigate(['/login']);
       }
