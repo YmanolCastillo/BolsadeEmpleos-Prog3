@@ -15,6 +15,10 @@ export class AuthService {
   public userEmail:string;
 public Tipo:string;
 public UserId:string;
+public UserID:string;
+public isAdminn: any =null;
+  public isPoster: any =null;
+  public IsUser: any =null;
   constructor(public afAuth: AngularFireAuth, private router: Router,private af:AngularFirestore) { }
   async login(email: string, password: string) {
     try {
@@ -25,10 +29,12 @@ public UserId:string;
      this.user=result.user.uid;
      this.userEmail=result.user.email
       console.log(this.userEmail)
+      this.getCurrentUser();
       return result;
     } catch (error) {
       alert('Ha ocurrido un error ' + error);
     }
+
   }
 
   async registro(email: string, password: string,nombre:string,TipoDeUsuario:string) {
@@ -117,5 +123,27 @@ case 'Admin':{
   }
   isAuth(){
     return this.afAuth.authState.pipe(map(auth=>auth));
+  }
+   getCurrentUser(){
+    this.isAuth().subscribe(
+    auth=>{
+      if(auth){
+        this.UserID=auth.uid;
+        console.log(this.UserID)
+         this.isAdmin(this.UserID).subscribe(
+           userrole=>{
+             this.isAdminn= Object.assign({},userrole.role)
+             this.isAdminn=this.isAdmin.hasOwnProperty('Admin')
+             this.isPoster= Object.assign({},userrole.role)
+             this.isPoster=this.isPoster.hasOwnProperty('Poster')
+             this.IsUser= Object.assign({},userrole.role)
+             this.IsUser=this.IsUser.hasOwnProperty('User')
+             console.log(`admin:${this.isAdmin}  poster:${this.isPoster}  User:${this.IsUser}` )
+           }
+         )
+      }
+    }  
+    )
+
   }
 }

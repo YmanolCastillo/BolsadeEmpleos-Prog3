@@ -11,9 +11,7 @@ import {PostService} from '../../services/post.service';
   styleUrls: ['./vertrabajos.component.scss']
 })
 export class VertrabajosComponent implements OnInit {
-  public isAdmin: any =null;
-  public isPoster: any =null;
-  public IsUser: any =null;
+  
   public userId:string =null;
   borrador:post;
 
@@ -21,8 +19,18 @@ export class VertrabajosComponent implements OnInit {
   constructor(public DB:AngularFirestore,public AuthService:AuthService,public PostService:PostService) { }
 
   ngOnInit(): void {
-    this.getCurrentUser();
-    if(this.isAdmin){
+    
+   this.getposts();
+
+  }
+  selectedPost(borrar:post):void{
+
+    this.borrador=borrar;
+    console.log(this.borrador)
+  }
+
+  getposts(){
+     if(this.AuthService.isAdminn){
       this.PostService.getposts().subscribe(post=>{
         this.posts=post;
         console.log('veo lo de admin');
@@ -30,9 +38,9 @@ export class VertrabajosComponent implements OnInit {
 
         )
     }
-    else if(this.isPoster){
+    else if(this.AuthService.isPoster){
     this.PostService.getposts().subscribe(post=>{
-      this.posts=post.filter(post=>  post.Uid==this.userId)
+      this.posts=post.filter(post=>  post.Uid==this.AuthService.UserID)
       console.log('veo lo de poster');
       
     }
@@ -48,41 +56,11 @@ export class VertrabajosComponent implements OnInit {
 
       )
   }
-
   }
-  selectedPost(borrar:post):void{
 
-    this.borrador=borrar;
+  deletePost(event, post:post){
     console.log(this.borrador)
-  }
-
-  getposts(){
-    
-  }
-  getCurrentUser(){
-    this.AuthService.isAuth().subscribe(
-    auth=>{
-      if(auth){
-        this.userId=auth.uid;
-        console.log(this.userId)
-         this.AuthService.isAdmin(this.userId).subscribe(
-           userrole=>{
-             this.isAdmin= Object.assign({},userrole.role)
-             this.isAdmin=this.isAdmin.hasOwnProperty('Admin')
-             this.isPoster= Object.assign({},userrole.role)
-             this.isPoster=this.isPoster.hasOwnProperty('Poster')
-             this.IsUser= Object.assign({},userrole.role)
-             this.IsUser=this.IsUser.hasOwnProperty('User')
-             console.log(`admin:${this.isAdmin}  poster:${this.isPoster}  User:${this.IsUser}` )
-           }
-         )
-      }
-    }  
-    )
-  }
-  deletepost(){
-    console.log(this.borrador)
-  this.PostService.deletepost(this.borrador)
+  this.PostService.deletepost(post)
   
   }
   update(){
