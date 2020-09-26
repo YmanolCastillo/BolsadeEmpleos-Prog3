@@ -3,17 +3,19 @@ import {post} from "./model";
 import {Observable} from "rxjs";
 import { map } from "rxjs/operators";
 import {AuthService} from '../services/auth.service';
+import { Router } from '@angular/router';
+
 import {AngularFirestore,AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 postId:string
-
+public IsUser:boolean;
   PostDocument:AngularFirestoreDocument<post>;
   PostCollection:AngularFirestoreCollection<post>;
   posts:Observable<post[]>
-  constructor(public DB:AngularFirestore,public AuthService:AuthService) { 
+  constructor(public DB:AngularFirestore,private router: Router) { 
 this.PostCollection=DB.collection('post');
 this.posts=this.PostCollection.snapshotChanges().pipe(map(actions => actions.map(a => {
 

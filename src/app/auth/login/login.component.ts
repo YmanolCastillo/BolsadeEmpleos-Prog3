@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
-
+import {PostService} from '../../services/post.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     email: new FormControl(''),
     password: new FormControl(''),
   });
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,public PostService:PostService) { }
 
   ngOnInit(): void {
   }
@@ -29,5 +29,8 @@ export class LoginComponent implements OnInit {
     } catch (error) {
       //alert('Ha ocurrido un error: ' + error);
     }
+  }
+  loguser(){
+    this.router.navigate(['/vertrabajos']);
   }
 }

@@ -6,7 +6,7 @@ import { auth } from 'firebase/app';
 import {User} from '../services/model';
 import { async } from '@angular/core/testing';
 import { map } from "rxjs/operators";
-
+import{PostService} from '../services/post.service'
 @Injectable({
   providedIn: 'root'
 })
@@ -14,12 +14,14 @@ export class AuthService {
   public user:string;
   public userEmail:string;
 public Tipo:string;
+public typeAdmin: boolean;
+  public typePoster: boolean;
 public UserId:string;
 public UserID:string;
 public isAdminn: any =null;
   public isPoster: any =null;
-  public IsUser: any =null;
-  constructor(public afAuth: AngularFireAuth, private router: Router,private af:AngularFirestore) { }
+  public IsUser:boolean;
+  constructor(public afAuth: AngularFireAuth, private router: Router,private af:AngularFirestore,public PostService:PostService) { }
   async login(email: string, password: string) {
     try {
       const result = await this.afAuth.auth.signInWithEmailAndPassword(
@@ -107,6 +109,9 @@ case 'Admin':{
   async logout() {
     try {
       await this.afAuth.auth.signOut();
+      this.PostService.IsUser=false;
+      this.isAdminn =null;
+      this.isPoster=null;
     } catch (error) {
       alert('Ha ocurrido un error: ' + error);
     }
@@ -118,6 +123,10 @@ case 'Admin':{
     return userRef.set(data, { merge: true })
 
   }
+  isUser(){
+    this.IsUser=true;
+    this.router.navigate(['/vertrabajos']);
+  } 
   isAdmin(userId){
     return this.af.doc<User>(`users/${userId}`).valueChanges();
   }
@@ -133,11 +142,10 @@ case 'Admin':{
          this.isAdmin(this.UserID).subscribe(
            userrole=>{
              this.isAdminn= Object.assign({},userrole.role)
-             this.isAdminn=this.isAdmin.hasOwnProperty('Admin')
+             this.typeAdmin=this.isAdminn.hasOwnProperty('Admin')
              this.isPoster= Object.assign({},userrole.role)
-             this.isPoster=this.isPoster.hasOwnProperty('Poster')
-             this.IsUser= Object.assign({},userrole.role)
-             this.IsUser=this.IsUser.hasOwnProperty('User')
+             this.typePoster=this.isPoster.hasOwnProperty('Poster')
+            
              console.log(`admin:${this.isAdmin}  poster:${this.isPoster}  User:${this.IsUser}` )
            }
          )
