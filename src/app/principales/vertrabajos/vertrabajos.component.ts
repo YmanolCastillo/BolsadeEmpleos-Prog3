@@ -19,8 +19,12 @@ export class VertrabajosComponent implements OnInit {
   constructor(public DB:AngularFirestore,public AuthService:AuthService,public PostService:PostService) { }
 
   ngOnInit(): void {
-    
-   this.getposts();
+    if(this.AuthService.isAdminn||this.AuthService.isPoster){
+      this.getposts();
+    }
+  else{
+    this.getPostForUsers()
+  }
 
   }
   selectedPost(borrar:post):void{
@@ -30,7 +34,7 @@ export class VertrabajosComponent implements OnInit {
   }
 
   getposts(){
-     if(this.AuthService.isAdminn){
+     if(this.AuthService.typeAdmin){
       this.PostService.getposts().subscribe(post=>{
         this.posts=post;
         console.log('veo lo de admin');
@@ -38,7 +42,7 @@ export class VertrabajosComponent implements OnInit {
 
         )
     }
-    else if(this.AuthService.isPoster){
+    else{
     this.PostService.getposts().subscribe(post=>{
       this.posts=post.filter(post=>  post.Uid==this.AuthService.UserID)
       console.log('veo lo de poster');
@@ -48,16 +52,16 @@ export class VertrabajosComponent implements OnInit {
 
       )
   }
-  else{
-    this.PostService.getposts().subscribe(post=>{
-      this.posts=post;
-      console.log('veo lo de user');
-    }
 
-      )
   }
+getPostForUsers(){
+  this.PostService.getposts().subscribe(post=>{
+    this.posts=post;
+    console.log('veo lo de user');
   }
 
+    )
+}
   deletePost(event, post:post){
     console.log(this.borrador)
   this.PostService.deletepost(post)
