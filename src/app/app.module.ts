@@ -14,6 +14,7 @@ import { CreartrabajosComponent } from './principales/creartrabajos/creartrabajo
 import {AuthService} from '../app/services/auth.service';
 import {environment} from "../environments/environment"
 import {PostService} from '../app/services/post.service';
+import { EnviarCorreoComponent } from './auth/enviar-correo/enviar-correo.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +24,7 @@ import {PostService} from '../app/services/post.service';
     RegistroComponent,
     VertrabajosComponent,
     CreartrabajosComponent,
+    EnviarCorreoComponent,
   
   ],
   imports: [

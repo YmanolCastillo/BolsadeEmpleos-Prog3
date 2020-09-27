@@ -7,6 +7,7 @@ import {User} from '../services/model';
 import { async } from '@angular/core/testing';
 import { map } from "rxjs/operators";
 import{PostService} from '../services/post.service'
+import * as firebase from 'firebase';
 @Injectable({
   providedIn: 'root'
 })
@@ -38,13 +39,18 @@ public isAdminn: any =null;
     }
 
   }
-
+  async sendEmailVerification():Promise <void>{
+    var user = firebase.auth().currentUser;
+    return (await user).sendEmailVerification();
+  }
+  
   async registro(email: string, password: string,nombre:string,TipoDeUsuario:string) {
     try {
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(
         email,
         password
       );
+      this.sendEmailVerification();
      this.UserId=result.user.uid
       this.Tipo=TipoDeUsuario;
       console.log(TipoDeUsuario)

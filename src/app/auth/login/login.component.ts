@@ -23,8 +23,12 @@ export class LoginComponent implements OnInit {
     try {
       const user = await this.authService.login(email, password);
       this.authService.login(email, password);
-      if (user) {
+      if (user && user.user.emailVerified) {
         this.router.navigate(['/vertrabajos']);
+      }else if(user){
+        alert('Aun no ha verificado su correo electronico');
+      }else {
+        this.router.navigate(['/registro']);
       }
     } catch (error) {
       //alert('Ha ocurrido un error: ' + error);
