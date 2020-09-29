@@ -18,6 +18,8 @@ export class VertrabajosComponent implements OnInit {
   posts:post[];
   constructor(public DB:AngularFirestore,public AuthService:AuthService,public PostService:PostService) { }
 
+  filterPost = "";
+
   ngOnInit(): void {
     if(this.AuthService.isAdminn||this.AuthService.isPoster){
       this.getposts();

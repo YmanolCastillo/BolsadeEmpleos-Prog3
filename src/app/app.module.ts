@@ -15,6 +15,9 @@ import {AuthService} from '../app/services/auth.service';
 import {environment} from "../environments/environment"
 import {PostService} from '../app/services/post.service';
 import { EnviarCorreoComponent } from './auth/enviar-correo/enviar-correo.component';
+import { FilterPipe } from './pipes/filter.pipe';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +28,7 @@ import { EnviarCorreoComponent } from './auth/enviar-correo/enviar-correo.compon
     VertrabajosComponent,
     CreartrabajosComponent,
     EnviarCorreoComponent,
+    FilterPipe,
   
   ],
   imports: [
@@ -32,7 +36,8 @@ import { EnviarCorreoComponent } from './auth/enviar-correo/enviar-correo.compon
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule, ReactiveFormsModule 
+    AngularFireAuthModule, ReactiveFormsModule,
+    FormsModule
   ],
   providers: [AuthService,PostService],
   bootstrap: [AppComponent]

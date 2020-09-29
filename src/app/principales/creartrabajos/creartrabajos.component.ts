@@ -3,6 +3,7 @@ import{ AuthService} from '../../services/auth.service';
 import {PostService} from '../../services/post.service';
 import{post} from '../../services/model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-creartrabajos',
@@ -26,7 +27,7 @@ export class CreartrabajosComponent implements OnInit {
     ubicacion:'',
     url:''
 }
-  constructor(private PostService:PostService,public auth:AuthService) { }
+  constructor(private PostService:PostService,public auth:AuthService,private router: Router) { }
 
   ngOnInit(): void {
     console.log(this.auth.userEmail)
@@ -45,6 +46,8 @@ export class CreartrabajosComponent implements OnInit {
     this.post.posicion='',
     this.post.ubicacion='',
     this.post.url=''
+
+    this.router.navigate(['/vertrabajos']);
     
     }
 }
