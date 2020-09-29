@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg">
+    <h4 class="mr-4"><b>Works App</b></h4>
+    <span class="navbar-text">
+        <a class="nav-link nav-item" routerLink="/login">Inicia Sesión</a>
+      </span>
+  </nav>
+  
+<div class="card ca" >
+    <div class="card-body">
+        <h3 class="card-tittle text-center">Gracias por registrarse!</h3>
+        <div class="form-group">
+            <p class="text-center">Hemos enviado un correo a la direccion proporcionada.</p>
+            <p class="text-center">Por favor revise su correo y haga click en el link para 
+                verificar su cuenta.
+            </p>
+        </div>
+        <div class="form-group text-center"> 
+            <button class="btn btn-primary" (click)="onSendEmail()" >Reenviar correo de confirmacion</button>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm">
+    <img class="mx-auto d-block img" src="../assets/Vectors/undraw_mobile_login_ikmv.svg" alt="">
+   </div>

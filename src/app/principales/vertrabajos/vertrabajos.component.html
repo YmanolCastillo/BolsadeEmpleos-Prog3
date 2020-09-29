@@ -1,92 +1,64 @@
 <app-navbar></app-navbar>
 
+<div class="row">
+  <div class="col-xs-5">
+    <div class="form-group">
+      <h5 class="in">Busqueda avanzada</h5>
+      <input type="text" placeholder="Filtrar por ubicacion, posicion o compañía" class="form-control in2" 
+      name="filterPost" [(ngModel)] = "filterPost">
+    </div>
+  </div>
+</div>
+
 <div class="card mt-4 ml-4 mr-4">
   <div class="card-body">
-    <h4>Categoria</h4>
-    <select class="form-control form-control-sm">
-      <option>Software</option>
-      <option>Diseño</option>
-    </select>
-    <table class="table">
-      <thead>
+    <h4>Trabajos</h4>
+    <div class="py-2">
+    </div>
+    <table class="table" >
+      <thead >
         <tr>
           <th scope="col">Ubicación</th>
           <th scope="col">Posición</th>
           <th scope="col">Compañía</th>
           <th scope="col">Información</th>
-          <th scope="col">Acciones</th>
+          <th scope="col" *ngIf="AuthService.isAdminn || AuthService.isPoster">Acciones</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngFor="let post of posts | filter:filterPost">
         <tr>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <td>{{post.ubicacion}}</td>
+          <td>{{post.posicion}}</td>
+          <td>{{post.compania}}</td>
           <td>
             <button
               class="btn btn-success"
               data-toggle="modal"
               data-target="#Modal"
+              (click)="selectedPost(post)"
             >
               Ver Más
             </button>
           </td>
           <td>
-            <button
+            <button *ngIf="AuthService.isAdminn || AuthService.isPoster"
               class="btn btn-success"
               data-toggle="modal"
               data-target="#EditarModal"
+              (click)="selectedPost(post)"
             >
               Editar
             </button>
+            <button *ngIf="AuthService.isAdminn || AuthService.isPoster"
+            class="btn btn-danger m-2"
+       
+            (click)="deletePost($event,post)"
+          >
+            eliminar
+          </button>
           </td>
         </tr>
-        <tr>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>
-            <button
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#Modal"
-            >
-              Ver Más
-            </button>
-          </td>
-          <td>
-            <button
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#Modal"
-            >
-              Editar
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>
-            <button
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#EditarModal"
-            >
-              Ver Más
-            </button>
-          </td>
-          <td>
-            <button
-              class="btn btn-success"
-              data-toggle="modal"
-              data-target="#EditarModal"
-            >
-              Editar
-            </button>
-          </td>
-        </tr>
+        
       </tbody>
     </table>
   </div>
@@ -94,6 +66,7 @@
 
 <!-- Modal para Ver Informacion-->
 <div
+*ngIf="borrador"
   class="modal fade"
   id="Modal"
   tabindex="-1"
@@ -115,7 +88,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">...</div>
+      <div class="modal-body">{{borrador.descripcion}}</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Cerrar
@@ -127,6 +100,7 @@
 
 <!-- Modal para Editar -->
 <div
+*ngIf="borrador"
   class="modal fade"
   id="EditarModal"
   tabindex="-1"
@@ -152,14 +126,16 @@
           <option>Software</option>
           <option>Diseño</option>
         </select>
-        <form>
+        <form >
           <div class="form-group">
             <label for="exampleFormControlInput1">Ubicación</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
               id="exampleFormControlInput1"
               placeholder="Ingrese la Ubicación"
+              name="ubicacion"
+             [(ngModel)]="borrador.ubicacion"
             />
           </div>
           <div class="form-group">
@@ -169,6 +145,8 @@
               class="form-control"
               id="exampleFormControlInput1"
               placeholder="Ingrese la Posición"
+              name="posicion"
+              [(ngModel)]="borrador.posicion"
             />
           </div>
           <div class="form-group">
@@ -178,6 +156,8 @@
               class="form-control"
               id="exampleFormControlInput1"
               placeholder="Ingrese la Compañía"
+              name="compania"
+              [(ngModel)]="borrador.compania"
             />
           </div>
           <div class="form-group">
@@ -186,6 +166,8 @@
               class="form-control"
               rows="4"
               placeholder="Ingrese la Descripción del trabajo"
+              name="descripcion"
+              [(ngModel)]="borrador.descripcion"
             ></textarea>
           </div>
         </form>
@@ -194,7 +176,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-primary" (click)="update()" data-dismiss="modal">Guardar</button>
       </div>
     </div>
   </div>

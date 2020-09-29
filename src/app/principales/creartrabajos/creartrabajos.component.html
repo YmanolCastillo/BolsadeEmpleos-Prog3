@@ -3,12 +3,13 @@
 <div class="card mt-4 ml-4 mr-4 mb-4">
   <h2 class="mt-4">Cuentanos de que se trata su trabajo</h2>
   <div class="card-body">
-    <h5>Seleccione la categoria</h5>
-    <select class="form-control form-control-sm mb-2">
-      <option>Software</option>
-      <option>Diseño</option>
-    </select>
-    <form>
+   
+    <form [formGroup]="createForm">
+      <h5>Seleccione la categoria</h5>
+      <select class="form-control form-control-sm mb-2" formControlName="TipoDeCuenta">
+        <option value="software">Software</option>
+        <option value="Diseño">Diseño</option>
+      </select>
       <div class="form-group">
         <label for="exampleFormControlInput1">Ubicación</label>
         <input
@@ -16,7 +17,8 @@
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="Ingrese la Ubicación"
-        />
+          [(ngModel)]="post.ubicacion" [ngModelOptions]="{standalone: true}">
+        
       </div>
       <div class="form-group">
         <label for="exampleFormControlInput1">Posición</label>
@@ -25,7 +27,8 @@
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="Ingrese la Posición"
-        />
+          [(ngModel)]="post.posicion" [ngModelOptions]="{standalone: true}">
+        
       </div>
       <div class="form-group">
         <label for="exampleFormControlInput1">Compañía</label>
@@ -34,7 +37,8 @@
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="Ingrese la Compañía"
-        />
+          [(ngModel)]="post.compania" [ngModelOptions]="{standalone: true}">
+        
       </div>
       <div class="form-group">
         <label for="exampleFormControlTextarea1">Descripción</label>
@@ -42,10 +46,11 @@
           class="form-control"
           rows="4"
           placeholder="Ingrese la Descripción del trabajo"
-        ></textarea>
+          [(ngModel)]="post.descripcion" [ngModelOptions]="{standalone: true}">
+        </textarea>
       </div>
       <button type="submit" class="btn btn-danger">Cancelar</button>
-      <button type="submit" class="btn btn-primary ml-4">Publicar</button>
+      <button type="submit" class="btn btn-primary ml-4" (click)="onSubmit()">Publicar</button>
     </form>
   </div>
 </div>

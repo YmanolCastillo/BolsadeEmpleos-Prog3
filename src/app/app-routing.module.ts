@@ -4,6 +4,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { CreartrabajosComponent } from './principales/creartrabajos/creartrabajos.component';
 import { VertrabajosComponent } from './principales/vertrabajos/vertrabajos.component';
+import { EnviarCorreoComponent } from './auth/enviar-correo/enviar-correo.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
 {
   path: 'creartrabajos',
   component: CreartrabajosComponent
+},
+{
+  path: 'verificacion-email',
+  component: EnviarCorreoComponent,
 }
 ];
 

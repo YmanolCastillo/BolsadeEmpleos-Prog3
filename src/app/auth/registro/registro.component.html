@@ -1,23 +1,47 @@
-<div class="container mt-4">
+<div class="container mt-1">
     <div class="row">
       <div class="col-sm">
        <img src="../assets/Vectors/undraw_mobile_login_ikmv.svg" alt="">
       </div>
-      <div class="col-sm campos">
+      <div class="col-sm campos mt-5">
           <h1>Registro</h1>
           <br>
           <br>
          
-        <form>
+        <form              [formGroup]="registerForm"
+        (ngSubmit)="onRegister()"
+        >
+        <div class="form-group">
+          <label for="TipoDeCuenta">Tipo de Cuenta</label>
+          <select class="form-control" id="TipoDeCuenta" formControlName="TipoDeCuenta">
+            <option (change)="onItemChange($event.target.value)" value="User" selected>Usuario</option>
+            <option (change)="onItemChange($event.target.value)" value="Poster">Compañia</option>
+        
+          </select>
+        </div>
+        <div class="form-group mt-2">
+          <label for="exampleInputEmail1">Nombre</label>
+          <input type="text" class="form-control" placeholder="Ingrese su Nombre"   required
+          
+          formControlName="nombre"
+>
+          <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        </div>
+
             <div class="form-group">
               <label for="exampleInputEmail1">Correo Electrónico</label>
-              <input type="email" class="form-control" placeholder="Ingrese su Correo Electrónico">
+              <input type="email" class="form-control" placeholder="Ingrese su Correo Electrónico"   required
+              
+              formControlName="email"
+>
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
+
             <div class="form-group">
               <label for="exampleInputPassword1">Contraseña</label>
-              <input type="password" class="form-control" placeholder="Ingrese su Contraseña">
+              <input type="password" class="form-control" placeholder="Ingrese su Contraseña" formControlName="password" required>
             </div>
+            
             <div class="row mb-4">
                 <div class="col-sm">
                     <div>
